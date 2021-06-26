@@ -12,24 +12,25 @@ const io = new Server(server, {
     }
 });
 
-const users: string[] = [];
+interface User {
+    id: string;
+    name: string;
+}
+
+const users: User[] = [];
 const rooms: Set<string>[] = [];
 
 io.on('connection', async (socket) => {
     socket.join('room1');
     console.log('a user connected: ', socket.id, socket.rooms);
     console.log(await io.sockets.allSockets());
-
-    // users.push(socket.id);
-    // rooms.push(socket.rooms);
-    // console.log('users: ', users);
-    // console.log('rooms: ', rooms);
+    socket.emit('connected', { id: socket.id });
 
     socket.on('chat message', (msg) => {
         console.log(`${socket.id} message: ` + msg);
         io.to('room1').emit(
             'broadcast message',
-            `message from the server ${msg}`
+            `message from ${socket.id}: ${msg}`
         );
     });
 

@@ -63,13 +63,10 @@ io.on('connection', function (socket) { return __awaiter(void 0, void 0, void 0,
                 return [4 /*yield*/, io.sockets.allSockets()];
             case 1:
                 _b.apply(_a, [_c.sent()]);
-                // users.push(socket.id);
-                // rooms.push(socket.rooms);
-                // console.log('users: ', users);
-                // console.log('rooms: ', rooms);
+                socket.emit('connected', { id: socket.id });
                 socket.on('chat message', function (msg) {
                     console.log(socket.id + " message: " + msg);
-                    io.to('room1').emit('broadcast message', "message from the server " + msg);
+                    io.to('room1').emit('broadcast message', "message from " + socket.id + ": " + msg);
                 });
                 socket.on('disconnect', function () {
                     console.log('user disconnected');
