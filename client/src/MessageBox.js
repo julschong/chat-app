@@ -7,6 +7,7 @@ const MessageBox = () => {
 
     useEffect(() => {
         socket.emit('chat message', 'hello');
+        socket.on('broadcast message', (msg) => console.log(msg));
     }, [socket]);
 
     const sendMessage = (msg) => {
