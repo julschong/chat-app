@@ -1,6 +1,6 @@
 import { createContext, React } from 'react';
 import { io } from 'socket.io-client';
-import Trying from './Child';
+import Trying from './MessageBox';
 
 const SOCKET_URL = 'http://localhost:3003';
 export const context = createContext();
