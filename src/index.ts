@@ -1,5 +1,7 @@
 import express from 'express';
+import cors from 'cors';
 const app = express();
+app.use(cors);
 import http from 'http';
 const server = http.createServer(app);
 
@@ -24,13 +26,18 @@ io.on('connection', async (socket) => {
     socket.join('room1');
     console.log('a user connected: ', socket.id, socket.rooms);
     console.log(await io.sockets.allSockets());
-    socket.emit('connected', { id: socket.id });
+
+    socket.on('login', (msg) => {
+        if (!msg) {
+            return socket.emit('connected', { id: `GUEST(${socket.id})` });
+        }
+        socket.emit('connected', { id: msg });
+    });
 
     socket.on('chat message', (msg) => {
-        console.log(`${socket.id} message: ` + msg);
         io.to('room1').emit(
             'broadcast message',
-            `message from ${socket.id}: ${msg}`
+            `${msg.user.name}: ${msg.message}`
         );
     });
 
