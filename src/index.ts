@@ -6,40 +6,37 @@ import http from 'http';
 const server = http.createServer(app);
 
 import { Server } from 'socket.io';
+import { broadcast } from './utils/socketActions';
 
-const io = new Server(server, {
+export const io = new Server(server, {
     cors: {
         origin: '*',
         methods: ['GET', 'POST']
     }
 });
 
-interface User {
-    id: string;
-    name: string;
-}
-
-const users: User[] = [];
-const rooms: Set<string>[] = [];
+// interface User {
+//     id: string;
+//     name: string;
+// }
 
 io.on('connection', async (socket) => {
-    socket.join('room1');
+    socket.join('global');
     console.log('a user connected: ', socket.id, socket.rooms);
-    console.log(await io.sockets.allSockets());
+
+    socket.on('create-new-room', async (roomName) => {
+        if (!roomName || roomName.trim() === '') {
+            return;
+        }
+        await socket.join(roomName);
+        socket.to(roomName).emit('new-user-joined', socket.id);
+    });
 
     socket.on('login', (msg) => {
-        if (!msg) {
-            return socket.emit('connected', { id: `GUEST(${socket.id})` });
-        }
-        socket.emit('connected', { id: msg });
+        console.log(msg);
     });
 
-    socket.on('chat message', (msg) => {
-        io.to('room1').emit(
-            'broadcast message',
-            `${msg.user.name}: ${msg.message}`
-        );
-    });
+    socket.on('chat message', broadcast);
 
     socket.on('disconnect', () => {
         console.log('user disconnected');
