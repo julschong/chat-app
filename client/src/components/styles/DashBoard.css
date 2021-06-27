@@ -1,0 +1,28 @@
+.dash-board-container {
+    background-color: var(--light-yellow-accent-color);
+    width: 80%;
+    height: 80%;
+    max-width: 1500px;
+    max-height: 800px;
+    position: relative;
+    border: 10px solid var(--medium-color);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dash-board-container-1 {
+    background-color: var(--medium-color);
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    margin: auto;
+    max-width: 1500px;
+    max-height: 1000px;
+    position: relative;
+    border: 10px solid var(--light-teal-accent-color);
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+}

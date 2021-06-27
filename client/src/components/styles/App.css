@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+body {
+    --dark-color: #201541;
+    --medium-color: #62668b;
+    --light-teal-accent-color: #a0ffdd;
+    --light-yellow-accent-color: #f7ffc2;
+    font-family: 'VT323', monospace;
+}
+
+.app {
+    width: 100%;
+    height: 100vh;
+    background-color: var(--dark-color);
+    color: var(--light-yellow-accent-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* scroll bar custom style */
+*::-webkit-scrollbar {
+    width: 12px; /* width of the entire scrollbar */
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent; /* color of the tracking area */
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: lightgrey; /* color of the scroll thumb */
+    border-radius: 20px; /* roundness of the scroll thumb */
+}

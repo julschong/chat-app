@@ -40,7 +40,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
+var cors_1 = __importDefault(require("cors"));
 var app = express_1.default();
+app.use(cors_1.default);
 var http_1 = __importDefault(require("http"));
 var server = http_1.default.createServer(app);
 var socket_io_1 = require("socket.io");
@@ -63,10 +65,14 @@ io.on('connection', function (socket) { return __awaiter(void 0, void 0, void 0,
                 return [4 /*yield*/, io.sockets.allSockets()];
             case 1:
                 _b.apply(_a, [_c.sent()]);
-                socket.emit('connected', { id: socket.id });
+                socket.on('login', function (msg) {
+                    if (!msg) {
+                        return socket.emit('connected', { id: "GUEST(" + socket.id + ")" });
+                    }
+                    socket.emit('connected', { id: msg });
+                });
                 socket.on('chat message', function (msg) {
-                    console.log(socket.id + " message: " + msg);
-                    io.to('room1').emit('broadcast message', "message from " + socket.id + ": " + msg);
+                    io.to('room1').emit('broadcast message', msg.user.name + ": " + msg.message);
                 });
                 socket.on('disconnect', function () {
                     console.log('user disconnected');

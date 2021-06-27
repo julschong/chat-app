@@ -1,0 +1,8 @@
+.chat-rooms-container {
+    width: 100%;
+    height: 60%;
+    background-color: var(--medium-color);
+    padding: 10px;
+    font-size: 0.7em;
+    text-align: start;
+}
