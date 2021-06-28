@@ -8,11 +8,14 @@ const socket = io.connect(SOCKET_URL);
 
 export const SocketContextProvider = ({ children }) => {
     const [user, setUser] = useState();
+    const [currentRoom, setCurrentRoom] = useState('global');
 
     useEffect(() => {
         const storedUser = window.localStorage.getItem('chat-app-user');
         if (storedUser) {
-            setUser(JSON.parse(storedUser));
+            const storedUserJson = JSON.parse(storedUser);
+            setUser(storedUserJson);
+            socket.emit('login', storedUserJson);
         }
     }, []);
 
@@ -27,9 +30,17 @@ export const SocketContextProvider = ({ children }) => {
 
         setUser(newUser);
         window.localStorage.setItem('chat-app-user', JSON.stringify(newUser));
+        socket.emit('login', newUser);
     };
 
-    const store = { socket, user, setUser, newLogin };
+    const store = {
+        socket,
+        user,
+        setUser,
+        newLogin,
+        currentRoom,
+        setCurrentRoom
+    };
     return (
         <SocketContext.Provider value={store}>
             {children}

@@ -9,7 +9,7 @@ const MessageBox = () => {
     const [chatHistory, setChatHistory] = useState([]);
 
     useEffect(() => {
-        socket.on('broadcast message', (msg) =>
+        socket.on('broadcast-message', (msg) =>
             setChatHistory((prev) => [...prev, msg])
         );
     }, [socket]);
@@ -18,7 +18,7 @@ const MessageBox = () => {
         if (msg.trim() === '') {
             return;
         }
-        socket.emit('chat message', { message: msg, user });
+        socket.emit('chat-message', { message: msg, user });
         message.current.value = '';
         message.current.focus();
     };
