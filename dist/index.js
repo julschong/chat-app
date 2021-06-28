@@ -14,40 +14,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.io = void 0;
 const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
 const app = express_1.default();
-app.use(cors_1.default);
 const http_1 = __importDefault(require("http"));
 const server = http_1.default.createServer(app);
 const socket_io_1 = require("socket.io");
-const socketActions_1 = require("./utils/socketActions");
+const socketActions_1 = require("./socketEvents/socketActions");
 exports.io = new socket_io_1.Server(server, {
     cors: {
         origin: '*',
         methods: ['GET', 'POST']
     }
 });
-// interface User {
-//     id: string;
-//     name: string;
-// }
 exports.io.on('connection', (socket) => __awaiter(void 0, void 0, void 0, function* () {
-    socket.join('global');
-    console.log('a user connected: ', socket.id, socket.rooms);
-    socket.on('create-new-room', (roomName) => __awaiter(void 0, void 0, void 0, function* () {
-        if (!roomName || roomName.trim() === '') {
-            return;
-        }
-        yield socket.join(roomName);
-        socket.to(roomName).emit('new-user-joined', socket.id);
-    }));
-    socket.on('login', (msg) => {
-        console.log(msg);
-    });
-    socket.on('chat message', socketActions_1.broadcast);
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-    });
+    socket.on('create-new-room', socketActions_1.joinNewRoom);
+    socket.on('get-active-rooms', socketActions_1.getActiveRoomList);
+    socket.on('chat-message', socketActions_1.broadcast);
+    socket.on('login', socketActions_1.userLogin);
+    socket.on('disconnect', socketActions_1.userDisconnect);
 }));
 server.listen(3003, () => {
     console.log('listening on port 3003');
