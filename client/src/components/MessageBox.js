@@ -9,9 +9,13 @@ const MessageBox = () => {
     const [chatHistory, setChatHistory] = useState([]);
 
     useEffect(() => {
-        socket.on('broadcast-message', (msg) =>
-            setChatHistory((prev) => [...prev, msg])
-        );
+        socket.on('broadcast-message', (id, name, msg) => {
+            console.log(id, name, msg);
+            setChatHistory((prev) => [
+                ...prev,
+                { user: { id, name }, message: msg }
+            ]);
+        });
     }, [socket]);
 
     const sendMessage = (msg) => {
@@ -19,6 +23,7 @@ const MessageBox = () => {
             return;
         }
         socket.emit('chat-message', { message: msg, user });
+        setChatHistory((prev) => [...prev, { user, message: msg }]);
         message.current.value = '';
         message.current.focus();
     };

@@ -12,10 +12,16 @@ interface BroadcastMessage {
 
 export function broadcast(msg: BroadcastMessage) {
     const thisUser = users.find((user) => user.serverId === this.id);
+    if (!thisUser) {
+        console.log(thisUser);
+        return;
+    }
 
-    io.to(thisUser.currentRoom).emit(
+    this.to(thisUser.currentRoom).emit(
         'broadcast-message',
-        `${msg.user.name}: ${msg.message}`
+        msg.user.id,
+        msg.user.name,
+        msg.message
     );
 }
 
@@ -39,12 +45,22 @@ export async function joinNewRoom(oldRoomName: string, roomName: string) {
     users.splice(userIndex, 1);
     users.push(user);
 
-    io.to(roomName).emit('broadcast message', 'new user has joined');
+    io.to(roomName).emit(
+        'broadcast-message',
+        '1',
+        'server',
+        'new user has joined'
+    );
     const newRoomRes = await io.in(roomName).fetchSockets();
     const newRoomUsers = newRoomRes.map((user) => user.id);
     io.to(roomName).emit('users-in-room', newRoomUsers);
 
-    io.to(oldRoomName).emit('broadcast message', 'a user has left');
+    io.to(oldRoomName).emit(
+        'broadcast-message',
+        '1',
+        'server',
+        'new user has left'
+    );
     const oldRoomRes = await io.in(oldRoomName).fetchSockets();
     const oldRoomUsers = oldRoomRes.map((user) => user.id);
     io.to(oldRoomName).emit('users-in-room', oldRoomUsers);

@@ -15,7 +15,9 @@ const DisplayChat = ({ chatHistory }) => {
             <p>{currentRoom}</p>
             <div className="display-chat-container">
                 {chatHistory.map((chat, i) => (
-                    <p key={i + chat}>{chat}</p>
+                    <div key={i + chat}>
+                        <p>{`${chat.user.name}: ${chat.message}`}</p>
+                    </div>
                 ))}
                 <div ref={bottomRef} />
             </div>
