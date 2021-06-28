@@ -14,7 +14,11 @@ const index_1 = require("../index");
 const user_1 = require("./../_data/user");
 function broadcast(msg) {
     const thisUser = user_1.users.find((user) => user.serverId === this.id);
-    index_1.io.to(thisUser.currentRoom).emit('broadcast-message', `${msg.user.name}: ${msg.message}`);
+    if (!thisUser) {
+        console.log(thisUser);
+        return;
+    }
+    this.to(thisUser.currentRoom).emit('broadcast-message', msg.user.id, msg.user.name, msg.message);
 }
 exports.broadcast = broadcast;
 /**
@@ -36,11 +40,11 @@ function joinNewRoom(oldRoomName, roomName) {
         const user = Object.assign(Object.assign({}, user_1.users[userIndex]), { currentRoom: roomName });
         user_1.users.splice(userIndex, 1);
         user_1.users.push(user);
-        index_1.io.to(roomName).emit('broadcast message', 'new user has joined');
+        index_1.io.to(roomName).emit('broadcast-message', '1', 'server', 'new user has joined');
         const newRoomRes = yield index_1.io.in(roomName).fetchSockets();
         const newRoomUsers = newRoomRes.map((user) => user.id);
         index_1.io.to(roomName).emit('users-in-room', newRoomUsers);
-        index_1.io.to(oldRoomName).emit('broadcast message', 'a user has left');
+        index_1.io.to(oldRoomName).emit('broadcast-message', '1', 'server', 'new user has left');
         const oldRoomRes = yield index_1.io.in(oldRoomName).fetchSockets();
         const oldRoomUsers = oldRoomRes.map((user) => user.id);
         index_1.io.to(oldRoomName).emit('users-in-room', oldRoomUsers);
