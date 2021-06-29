@@ -40,13 +40,11 @@ function joinNewRoom(oldRoomName, roomName) {
         const user = Object.assign(Object.assign({}, user_1.users[userIndex]), { currentRoom: roomName });
         user_1.users.splice(userIndex, 1);
         user_1.users.push(user);
-        index_1.io.to(roomName).emit('broadcast-message', '1', 'server', 'new user has joined');
-        const newRoomRes = yield index_1.io.in(roomName).fetchSockets();
-        const newRoomUsers = newRoomRes.map((user) => user.id);
+        index_1.io.to(roomName).emit('broadcast-message', '1', 'server', `${user.name} has joined room: ${roomName}`);
+        const newRoomUsers = user_1.users.filter((user) => user.currentRoom === roomName);
         index_1.io.to(roomName).emit('users-in-room', newRoomUsers);
-        index_1.io.to(oldRoomName).emit('broadcast-message', '1', 'server', 'new user has left');
-        const oldRoomRes = yield index_1.io.in(oldRoomName).fetchSockets();
-        const oldRoomUsers = oldRoomRes.map((user) => user.id);
+        index_1.io.to(oldRoomName).emit('broadcast-message', '1', 'server', `${user.name} has left room: ${oldRoomName}`);
+        const oldRoomUsers = user_1.users.filter((user) => user.currentRoom === oldRoomName);
         index_1.io.to(oldRoomName).emit('users-in-room', oldRoomUsers);
         index_1.io.emit('get-active-rooms', getActiveRooms(index_1.io.sockets.adapter.rooms));
     });
@@ -80,16 +78,15 @@ exports.userDisconnect = userDisconnect;
 function userLogin({ id, name }) {
     return __awaiter(this, void 0, void 0, function* () {
         this.join('global');
-        const res = yield index_1.io.in('global').fetchSockets();
-        const usersInGlobal = res.map((user) => user.id);
-        index_1.io.to('global').emit('users-in-room', usersInGlobal);
-        console.log(usersInGlobal);
         user_1.users.push({
             clientId: id,
             name,
             currentRoom: 'global',
             serverId: this.id
         });
+        const usersInGlobal = user_1.users.filter((user) => (user.currentRoom = 'global'));
+        index_1.io.to('global').emit('users-in-room', usersInGlobal);
+        console.log(usersInGlobal);
     });
 }
 exports.userLogin = userLogin;

@@ -49,20 +49,21 @@ export async function joinNewRoom(oldRoomName: string, roomName: string) {
         'broadcast-message',
         '1',
         'server',
-        'new user has joined'
+        `${user.name} has joined room: ${roomName}`
     );
-    const newRoomRes = await io.in(roomName).fetchSockets();
-    const newRoomUsers = newRoomRes.map((user) => user.id);
+
+    const newRoomUsers = users.filter((user) => user.currentRoom === roomName);
     io.to(roomName).emit('users-in-room', newRoomUsers);
 
     io.to(oldRoomName).emit(
         'broadcast-message',
         '1',
         'server',
-        'new user has left'
+        `${user.name} has left room: ${oldRoomName}`
     );
-    const oldRoomRes = await io.in(oldRoomName).fetchSockets();
-    const oldRoomUsers = oldRoomRes.map((user) => user.id);
+    const oldRoomUsers = users.filter(
+        (user) => user.currentRoom === oldRoomName
+    );
     io.to(oldRoomName).emit('users-in-room', oldRoomUsers);
 
     io.emit('get-active-rooms', getActiveRooms(io.sockets.adapter.rooms));
@@ -100,14 +101,13 @@ interface LoginMessage {
 }
 export async function userLogin({ id, name }: LoginMessage) {
     this.join('global');
-    const res = await io.in('global').fetchSockets();
-    const usersInGlobal = res.map((user) => user.id);
-    io.to('global').emit('users-in-room', usersInGlobal);
-    console.log(usersInGlobal);
     users.push({
         clientId: id,
         name,
         currentRoom: 'global',
         serverId: this.id
     });
+    const usersInGlobal = users.filter((user) => (user.currentRoom = 'global'));
+    io.to('global').emit('users-in-room', usersInGlobal);
+    console.log(usersInGlobal);
 }
