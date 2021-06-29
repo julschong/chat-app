@@ -11,7 +11,6 @@ import {
     userDisconnect,
     userLogin
 } from './socketEvents/socketActions';
-import { users, User } from './_data/user';
 
 export const io = new Server(server, {
     cors: {

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userLogin = exports.userDisconnect = exports.getActiveRoomList = exports.joinNewRoom = exports.broadcast = void 0;
+exports.userLogin = exports.userDisconnect = exports.getActiveRooms = exports.getActiveRoomList = exports.joinNewRoom = exports.broadcast = void 0;
 const index_1 = require("../index");
 const user_1 = require("./../_data/user");
 function broadcast(msg) {
@@ -68,6 +68,7 @@ function getActiveRooms(dataFromIoSocketsAdapeterRooms) {
     const res = filtered.map((i) => i[0]);
     return res;
 }
+exports.getActiveRooms = getActiveRooms;
 function userDisconnect() {
     return __awaiter(this, void 0, void 0, function* () {
         const id = user_1.users.findIndex((user) => user.serverId === this.id);
