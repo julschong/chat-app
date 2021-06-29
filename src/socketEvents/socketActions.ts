@@ -73,7 +73,7 @@ export async function getActiveRoomList() {
     this.emit('get-active-rooms', getActiveRooms(io.sockets.adapter.rooms));
 }
 
-function getActiveRooms(
+export function getActiveRooms(
     dataFromIoSocketsAdapeterRooms: Map<string, Set<string>>
 ) {
     // Convert map into 2D list:
