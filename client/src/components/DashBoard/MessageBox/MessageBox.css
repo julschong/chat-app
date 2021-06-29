@@ -1,8 +1,17 @@
 .message-container {
     display: flex;
     flex-direction: column;
-    width: 100%;
     gap: 10px;
+    flex: 1;
+    max-width: 85%;
+}
+
+.message {
+    width: 100%;
+}
+
+.message > p {
+    word-wrap: break-word;
 }
 
 .form-control {

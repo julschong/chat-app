@@ -1,6 +1,6 @@
-import MessageBox from './MessageBox';
-import './styles/DashBoard.css';
-import LeftPanel from './LeftPanel';
+import MessageBox from './MessageBox/MessageBox';
+import './DashBoard.css';
+import LeftPanel from './LeftPanel/LeftPanel';
 
 const DashBoard = () => {
     return (

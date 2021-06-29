@@ -1,5 +1,5 @@
-import './styles/Live.css';
-import { SocketContext } from './../context/socketContext';
+import './Live.css';
+import { SocketContext } from '../../../../context/socketContext';
 import { useContext, useEffect, useState } from 'react';
 
 const Live = () => {
@@ -13,11 +13,11 @@ const Live = () => {
     return (
         <div className="live-container">
             Whos in the Room?:
-            <ul>
+            <div>
                 {usersInRoom.map((user, i) => (
-                    <li key={user + i}>{user}</li>
+                    <p key={user.name + i}>{user.name}</p>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

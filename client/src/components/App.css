@@ -13,7 +13,7 @@ body {
     height: 100vh;
     /* background-color: var(--dark-color); */
     color: var(--light-yellow-accent-color);
-    background-image: url('../../assets/night-sky.jpg');
+    background-image: url('../assets/night-sky.jpg');
     background-size: cover;
     display: flex;
     justify-content: center;

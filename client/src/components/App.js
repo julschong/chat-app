@@ -1,5 +1,5 @@
-import DashBoard from './DashBoard';
-import './styles/App.css';
+import DashBoard from './DashBoard/DashBoard';
+import './App.css';
 import { useContext } from 'react';
 import { SocketContext } from './../context/socketContext';
 import Login from './Login';

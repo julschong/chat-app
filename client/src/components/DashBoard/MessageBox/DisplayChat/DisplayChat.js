@@ -1,8 +1,8 @@
 import { useRef, useEffect, useContext } from 'react';
-import './styles/DisplayChat.css';
-import { SocketContext } from './../context/socketContext';
+import './DisplayChat.css';
+import { SocketContext } from '../../../../context/socketContext';
 
-const DisplayChat = ({ chatHistory }) => {
+const DisplayChat = ({ chatHistory, setChatHistory }) => {
     const bottomRef = useRef();
     const { currentRoom } = useContext(SocketContext);
 
@@ -10,12 +10,16 @@ const DisplayChat = ({ chatHistory }) => {
         bottomRef.current.scrollIntoView();
     }, [chatHistory]);
 
+    useEffect(() => {
+        setChatHistory([]);
+    }, [currentRoom, setChatHistory]);
+
     return (
         <>
             <p>{currentRoom}</p>
             <div className="display-chat-container">
                 {chatHistory.map((chat, i) => (
-                    <div key={i + chat}>
+                    <div className="message" key={i + chat}>
                         <p>{`${chat.user.name}: ${chat.message}`}</p>
                     </div>
                 ))}

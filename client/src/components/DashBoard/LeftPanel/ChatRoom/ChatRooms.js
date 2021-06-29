@@ -1,6 +1,6 @@
-import './styles/ChatRooms.css';
+import './ChatRooms.css';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { SocketContext } from './../context/socketContext';
+import { SocketContext } from '../../../../context/socketContext';
 
 const ChatRooms = () => {
     const { socket, currentRoom, setCurrentRoom } = useContext(SocketContext);

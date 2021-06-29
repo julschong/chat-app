@@ -1,8 +1,8 @@
-import './styles/LeftPanel.css';
-import ChatRooms from './ChatRooms';
-import Live from './Live';
+import './LeftPanel.css';
 import { useContext } from 'react';
-import { SocketContext } from './../context/socketContext';
+import { SocketContext } from '../../../context/socketContext';
+import Live from './Live/Live';
+import ChatRooms from './ChatRoom/ChatRooms';
 
 const LeftPanel = () => {
     const { user } = useContext(SocketContext);

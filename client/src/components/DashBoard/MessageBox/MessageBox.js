@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, useRef } from 'react';
-import './styles/MessageBox.css';
-import DisplayChat from './DisplayChat';
-import { SocketContext } from './../context/socketContext';
+import './MessageBox.css';
+import DisplayChat from './DisplayChat/DisplayChat';
+import { SocketContext } from '../../../context/socketContext';
 
 const MessageBox = () => {
     const { socket, user } = useContext(SocketContext);
@@ -30,7 +30,10 @@ const MessageBox = () => {
 
     return (
         <div className="message-container">
-            <DisplayChat chatHistory={chatHistory} />
+            <DisplayChat
+                setChatHistory={setChatHistory}
+                chatHistory={chatHistory}
+            />
             <form
                 className="form-control"
                 onSubmit={(e) => {
