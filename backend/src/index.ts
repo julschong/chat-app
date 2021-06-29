@@ -27,6 +27,8 @@ io.on('connection', async (socket) => {
     socket.on('disconnect', userDisconnect);
 });
 
-server.listen(3003, () => {
-    console.log('listening on port 3003');
-});
+if (process.env.NODE_ENV !== 'test') {
+    server.listen(3003, () => {
+        console.log('listening on port 3003');
+    });
+}

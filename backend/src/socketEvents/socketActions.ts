@@ -95,19 +95,22 @@ export async function userDisconnect() {
     users.splice(id, 1);
 }
 
-interface LoginMessage {
+export interface LoginMessage {
     id: string;
     name: string;
 }
-export async function userLogin({ id, name }: LoginMessage) {
-    this.join('global');
+export async function userLogin(
+    { id, name }: LoginMessage,
+    socket: Socket = this
+) {
+    socket.join('global');
     users.push({
         clientId: id,
         name,
         currentRoom: 'global',
-        serverId: this.id
+        serverId: socket.id
     });
     const usersInGlobal = users.filter((user) => (user.currentRoom = 'global'));
     io.to('global').emit('users-in-room', usersInGlobal);
-    console.log(usersInGlobal);
+    // console.log(usersInGlobal);
 }
