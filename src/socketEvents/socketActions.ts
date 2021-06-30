@@ -90,7 +90,7 @@ export function getActiveRooms(
     return res;
 }
 
-export async function userDisconnect() {
+export function userDisconnect() {
     const id = users.findIndex((user: User) => user.serverId === this.id);
     users.splice(id, 1);
 }
