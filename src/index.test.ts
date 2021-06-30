@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io';
 
-import { createServer, Server as hpServer } from 'http';
+import { createServer, METHODS, Server as hpServer } from 'http';
 import { Server } from 'socket.io';
 import { Socket as ClientSocket, io as ClientIO } from 'socket.io-client';
 import { AddressInfo } from 'net';
@@ -52,7 +52,7 @@ describe('my test', () => {
         };
 
         serverSocket.on('login', async function (loginData: LoginMessage) {
-            await userLogin(loginData, serverSocket);
+            await userLogin.apply(serverSocket, [loginData]);
             expect(users).toHaveLength(1);
             expect(Object.keys(users[0])).toContain('clientId');
             expect(Object.keys(users[0])).toContain('name');

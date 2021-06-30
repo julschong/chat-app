@@ -99,16 +99,13 @@ export interface LoginMessage {
     id: string;
     name: string;
 }
-export async function userLogin(
-    { id, name }: LoginMessage,
-    socket: Socket = this
-) {
-    socket.join('global');
+export async function userLogin({ id, name }: LoginMessage) {
+    this.join('global');
     users.push({
         clientId: id,
         name,
         currentRoom: 'global',
-        serverId: socket.id
+        serverId: this.id
     });
     const usersInGlobal = users.filter((user) => (user.currentRoom = 'global'));
     io.to('global').emit('users-in-room', usersInGlobal);
