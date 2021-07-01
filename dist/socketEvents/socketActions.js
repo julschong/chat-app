@@ -70,10 +70,8 @@ function getActiveRooms(dataFromIoSocketsAdapeterRooms) {
 }
 exports.getActiveRooms = getActiveRooms;
 function userDisconnect() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const id = user_1.users.findIndex((user) => user.serverId === this.id);
-        user_1.users.splice(id, 1);
-    });
+    const id = user_1.users.findIndex((user) => user.serverId === this.id);
+    user_1.users.splice(id, 1);
 }
 exports.userDisconnect = userDisconnect;
 function userLogin({ id, name }) {
@@ -87,7 +85,7 @@ function userLogin({ id, name }) {
         });
         const usersInGlobal = user_1.users.filter((user) => (user.currentRoom = 'global'));
         index_1.io.to('global').emit('users-in-room', usersInGlobal);
-        console.log(usersInGlobal);
+        // console.log(usersInGlobal);
     });
 }
 exports.userLogin = userLogin;

@@ -32,7 +32,9 @@ exports.io.on('connection', (socket) => __awaiter(void 0, void 0, void 0, functi
     socket.on('login', socketActions_1.userLogin);
     socket.on('disconnect', socketActions_1.userDisconnect);
 }));
-server.listen(3003, () => {
-    console.log('listening on port 3003');
-});
+if (process.env.NODE_ENV !== 'test') {
+    server.listen(3003, () => {
+        console.log('listening on port 3003');
+    });
+}
 //# sourceMappingURL=index.js.map
