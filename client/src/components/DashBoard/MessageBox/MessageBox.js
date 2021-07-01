@@ -3,6 +3,9 @@ import './MessageBox.css';
 import DisplayChat from './DisplayChat/DisplayChat';
 import { SocketContext } from '../../../context/socketContext';
 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 const MessageBox = () => {
     const { socket, user } = useContext(SocketContext);
     const message = useRef();
@@ -28,6 +31,9 @@ const MessageBox = () => {
         message.current.focus();
     };
 
+    const [value, setValue] = useState('');
+    const displayRef = useRef();
+
     return (
         <div className="message-container">
             <DisplayChat
@@ -41,12 +47,23 @@ const MessageBox = () => {
                     sendMessage(message.current.value);
                 }}
             >
+                <ReactQuill
+                    theme="snow"
+                    value={value}
+                    onChange={(e) => {
+                        // setValue(e.target.value);
+                        setValue(e);
+                        displayRef.current.innerHTML = e;
+                    }}
+                />
+                <div ref={displayRef}></div>
                 <input
                     className="message-input"
                     type="text"
                     ref={message}
                     placeholder="Type your message here..."
                 />
+
                 <input className="send-btn" type="submit" value="Send" />
             </form>
         </div>
