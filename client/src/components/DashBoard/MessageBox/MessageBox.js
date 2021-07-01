@@ -31,8 +31,7 @@ const MessageBox = () => {
         message.current.focus();
     };
 
-    const [value, setValue] = useState('');
-    const displayRef = useRef();
+    const [editerValue, setEditerValue] = useState('');
 
     return (
         <div className="message-container">
@@ -49,14 +48,13 @@ const MessageBox = () => {
             >
                 <ReactQuill
                     theme="snow"
-                    value={value}
-                    onChange={(e) => {
-                        // setValue(e.target.value);
-                        setValue(e);
-                        displayRef.current.innerHTML = e;
-                    }}
+                    value={editerValue}
+                    onChange={(e) => setEditerValue(e)}
                 />
-                <div ref={displayRef}></div>
+                <div
+                    contentEditable
+                    dangerouslySetInnerHTML={{ __html: editerValue }}
+                ></div>
                 <input
                     className="message-input"
                     type="text"
