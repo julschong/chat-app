@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently --kill-others \"npm run dev:watch\" \"npm run dev:run\"",
+    "dev": "concurrently --kill-others \"npm run dev:watch\" \"npm run dev:run\" \"cd ../client && npm start \"",
     "dev:watch": "cross-env tsc -w",
     "dev:run": "cross-env NODE_ENV=dev nodemon ./dist/index.js",
     "test": "jest"
