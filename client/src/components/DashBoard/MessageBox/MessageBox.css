@@ -16,17 +16,24 @@
 
 .form-control {
     flex-grow: 1;
-    min-height: 50px;
     display: flex;
     gap: 20px;
+    min-height: 150px;
 }
 
-.message-input {
+.quill {
     width: 90%;
     background-color: var(--dark-color);
     color: var(--light-yellow-accent-color);
-    height: 100%;
     font-size: 1.5em;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+}
+
+.ql-editor {
+    max-height: 100%;
+    overflow-y: hidden;
 }
 
 .send-btn {

@@ -20,7 +20,13 @@ const DisplayChat = ({ chatHistory, setChatHistory }) => {
             <div className="display-chat-container">
                 {chatHistory.map((chat, i) => (
                     <div className="message" key={i + chat}>
-                        <p>{`${chat.user.name}: ${chat.message}`}</p>
+                        <p>{`${chat.user.name}:    `}</p>
+                        <p
+                            style={{ display: 'inline' }}
+                            dangerouslySetInnerHTML={{
+                                __html: chat.message
+                            }}
+                        />
                     </div>
                 ))}
                 <div ref={bottomRef} />

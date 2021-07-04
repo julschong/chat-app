@@ -27,11 +27,13 @@ const MessageBox = () => {
         }
         socket.emit('chat-message', { message: msg, user });
         setChatHistory((prev) => [...prev, { user, message: msg }]);
-        message.current.value = '';
-        message.current.focus();
+        setEditerValue('');
+        // message.current.value = '';
+        // message.current.focus();
     };
 
     const [editerValue, setEditerValue] = useState('');
+    const quillRef = useRef();
 
     return (
         <div className="message-container">
@@ -43,24 +45,29 @@ const MessageBox = () => {
                 className="form-control"
                 onSubmit={(e) => {
                     e.preventDefault();
-                    sendMessage(message.current.value);
+                    sendMessage(editerValue);
                 }}
             >
                 <ReactQuill
+                    ref={quillRef}
                     theme="snow"
                     value={editerValue}
-                    onChange={(e) => setEditerValue(e)}
+                    onChange={(e) => {
+                        console.dir(quillRef.current.editor.getLength() - 1);
+                        setEditerValue(e);
+                    }}
+                    placeholder="Type your message here..."
+                    className="message-input"
                 />
-                <div
-                    contentEditable
+                {/* <div
                     dangerouslySetInnerHTML={{ __html: editerValue }}
-                ></div>
-                <input
+                ></div> */}
+                {/* <input
                     className="message-input"
                     type="text"
                     ref={message}
                     placeholder="Type your message here..."
-                />
+                /> */}
 
                 <input className="send-btn" type="submit" value="Send" />
             </form>
