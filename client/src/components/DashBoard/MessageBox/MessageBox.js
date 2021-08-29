@@ -8,7 +8,6 @@ import 'react-quill/dist/quill.snow.css';
 
 const MessageBox = () => {
     const { socket, user } = useContext(SocketContext);
-    const message = useRef();
     const [chatHistory, setChatHistory] = useState([]);
 
     useEffect(() => {
@@ -28,8 +27,6 @@ const MessageBox = () => {
         socket.emit('chat-message', { message: msg, user });
         setChatHistory((prev) => [...prev, { user, message: msg }]);
         setEditerValue('');
-        // message.current.value = '';
-        // message.current.focus();
     };
 
     const [editerValue, setEditerValue] = useState('');
@@ -59,15 +56,6 @@ const MessageBox = () => {
                     placeholder="Type your message here..."
                     className="message-input"
                 />
-                {/* <div
-                    dangerouslySetInnerHTML={{ __html: editerValue }}
-                ></div> */}
-                {/* <input
-                    className="message-input"
-                    type="text"
-                    ref={message}
-                    placeholder="Type your message here..."
-                /> */}
 
                 <input className="send-btn" type="submit" value="Send" />
             </form>
