@@ -18,6 +18,7 @@ const MessageBox = () => {
                 { user: { id, name }, message: msg }
             ]);
         });
+        quillRef.current.editor.focus();
     }, [socket]);
 
     const sendMessage = (msg) => {
@@ -30,7 +31,9 @@ const MessageBox = () => {
     };
 
     const [editerValue, setEditerValue] = useState('');
+    const [ctrl, setCtrl] = useState(false);
     const quillRef = useRef();
+    const sendRef = useRef();
 
     return (
         <div className="message-container">
@@ -42,7 +45,18 @@ const MessageBox = () => {
                 className="form-control"
                 onSubmit={(e) => {
                     e.preventDefault();
-                    sendMessage(editerValue);
+                    console.log(
+                        editerValue.replace(
+                            /^(<p><br><\/p>)*|(<p><br><\/p>)*$/g,
+                            ''
+                        )
+                    );
+                    sendMessage(
+                        editerValue.replace(
+                            /^(<p><br><\/p>)*|(<p><br><\/p>)*$/g,
+                            ''
+                        )
+                    );
                 }}
             >
                 <ReactQuill
@@ -50,14 +64,32 @@ const MessageBox = () => {
                     theme="snow"
                     value={editerValue}
                     onChange={(e) => {
-                        console.dir(quillRef.current.editor.getLength() - 1);
+                        // console.dir(quillRef.current.editor.getLength() - 1);
                         setEditerValue(e);
                     }}
-                    placeholder="Type your message here..."
+                    onKeyDown={(e) => {
+                        if (e.key === 'Control') {
+                            setCtrl(true);
+                        }
+                        if (e.key === 'Enter' && ctrl) {
+                            sendRef.current.click();
+                        }
+                    }}
+                    onKeyUp={(e) => {
+                        if (e.key === 'Control') {
+                            setCtrl(false);
+                        }
+                    }}
+                    placeholder="Type your message here... ctrl+enter to send"
                     className="message-input"
                 />
 
-                <input className="send-btn" type="submit" value="Send" />
+                <input
+                    className="send-btn"
+                    type="submit"
+                    value="Send"
+                    ref={sendRef}
+                />
             </form>
         </div>
     );

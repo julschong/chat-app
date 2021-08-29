@@ -52,6 +52,7 @@ const ChatRooms = () => {
                 ref={newRoomInputRef}
                 type="text"
                 placeholder="type a room name"
+                style={{ maxWidth: '100%' }}
             />
             <button onClick={test}>create a room</button>
         </div>

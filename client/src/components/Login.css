@@ -1,0 +1,14 @@
+.name-input {
+    font-size: 36px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    color: var(--light-yellow-accent-color);
+}
+
+.name-input::placeholder {
+    color: var(--lightest-yellow-accent-color);
+}
+
+.name-input:focus {
+    outline: none;
+}

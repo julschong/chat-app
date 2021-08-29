@@ -5,6 +5,11 @@ body {
     --medium-color: #62668b;
     --light-teal-accent-color: #a0ffdd;
     --light-yellow-accent-color: #f7ffc2;
+    --lightest-yellow-accent-color: #f7ffc2a6;
+
+    font-family: 'VT323', monospace;
+}
+* {
     font-family: 'VT323', monospace;
 }
 

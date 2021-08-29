@@ -19,6 +19,7 @@
     display: flex;
     gap: 20px;
     min-height: 150px;
+    max-height: 200px;
 }
 
 .quill {
@@ -34,6 +35,14 @@
 .ql-editor {
     max-height: 100%;
     overflow-y: hidden;
+    font-size: 20px;
+}
+
+.quill > .ql-container > .ql-editor.ql-blank::before {
+    color: var(--lightest-yellow-accent-color);
+}
+.quill > .ql-container {
+    overflow: hidden;
 }
 
 .send-btn {
