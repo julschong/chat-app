@@ -31,7 +31,7 @@ const MessageBox = () => {
     };
 
     const [editerValue, setEditerValue] = useState('');
-    const [ctrl, setCtrl] = useState(false);
+    const [shift, setShift] = useState(false);
     const quillRef = useRef();
     const sendRef = useRef();
 
@@ -63,19 +63,19 @@ const MessageBox = () => {
                         setEditerValue(e);
                     }}
                     onKeyDown={(e) => {
-                        if (e.key === 'Control') {
-                            setCtrl(true);
+                        if (e.key === 'Shift') {
+                            setShift(true);
                         }
-                        if (e.key === 'Enter' && ctrl) {
+                        if (e.key === 'Enter' && !shift) {
                             sendRef.current.click();
                         }
                     }}
                     onKeyUp={(e) => {
-                        if (e.key === 'Control') {
-                            setCtrl(false);
+                        if (e.key === 'Shift') {
+                            setShift(false);
                         }
                     }}
-                    placeholder="Type your message here... ctrl+enter to send"
+                    placeholder="Type your message here... shift+enter for new line"
                     className="message-input"
                 />
 
