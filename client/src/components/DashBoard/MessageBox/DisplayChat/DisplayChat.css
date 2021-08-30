@@ -11,3 +11,19 @@
     display: flex;
     gap: 10px;
 }
+
+.menu-btn {
+    display: none;
+    background-color: transparent;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    align-self: flex-start;
+}
+
+@media only screen and (max-width: 600px) {
+    .menu-btn {
+        display: block;
+        color: var(--light-yellow-accent-color);
+    }
+}

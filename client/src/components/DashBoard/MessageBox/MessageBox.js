@@ -5,8 +5,9 @@ import { SocketContext } from '../../../context/socketContext';
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { GiHamburgerMenu } from 'react-icons/gi';
 
-const MessageBox = () => {
+const MessageBox = ({ setMenu }) => {
     const { socket, user } = useContext(SocketContext);
     const [chatHistory, setChatHistory] = useState([]);
 
@@ -37,6 +38,9 @@ const MessageBox = () => {
 
     return (
         <div className="message-container">
+            <button className="menu-btn" onClick={() => setMenu((m) => !m)}>
+                <GiHamburgerMenu />
+            </button>
             <DisplayChat
                 setChatHistory={setChatHistory}
                 chatHistory={chatHistory}
