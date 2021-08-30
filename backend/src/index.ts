@@ -18,7 +18,7 @@ import {
 
 export const io = new Server(server, {
     cors: {
-        origin: '*',
+        origin: 'https://jc-chat-app.netlify.app',
         methods: ['GET', 'POST']
     }
 });
