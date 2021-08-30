@@ -2,7 +2,11 @@ import { createContext, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { v4 } from 'uuid';
 
-const SOCKET_URL = 'http://192.168.5.194:3003/';
+const SOCKET_URL =
+    process.env.NODE_ENV === 'development'
+        ? process.env.REACT_APP_LOCAL_URL
+        : process.env.REACT_APP_BACKEND_URL;
+
 export const SocketContext = createContext();
 const socket = io.connect(SOCKET_URL);
 
