@@ -7,7 +7,7 @@
     "node": "16.0.x"
   },
   "scripts": {
-    "web-start": "node ./dist/index.js",
+    "start": "node ./dist/index.js",
     "dev": "concurrently --kill-others \"npm run dev:watch\" \"npm run dev:run\" \"cd ../client && npm start \"",
     "dev:watch": "cross-env tsc -w",
     "dev:run": "cross-env NODE_ENV=dev nodemon ./dist/index.js",
