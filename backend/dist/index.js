@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.io = void 0;
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const app = express_1.default();
 app.use(cors_1.default());
 const http_1 = __importDefault(require("http"));
@@ -23,7 +25,7 @@ const socket_io_1 = require("socket.io");
 const socketActions_1 = require("./socketEvents/socketActions");
 exports.io = new socket_io_1.Server(server, {
     cors: {
-        origin: 'https://jc-chat-app.netlify.app',
+        origin: '*',
         methods: ['GET', 'POST']
     }
 });
@@ -35,6 +37,7 @@ exports.io.on('connection', (socket) => __awaiter(void 0, void 0, void 0, functi
     socket.on('disconnect', socketActions_1.userDisconnect);
 }));
 if (process.env.NODE_ENV !== 'test') {
+    console.log(process.env.PORT);
     server.listen(process.env.PORT, () => {
         console.log(`listening on port ${process.env.PORT}`);
     });

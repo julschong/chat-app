@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 app.use(cors());
@@ -18,7 +20,7 @@ import {
 
 export const io = new Server(server, {
     cors: {
-        origin: 'https://jc-chat-app.netlify.app',
+        origin: '*',
         methods: ['GET', 'POST']
     }
 });
@@ -32,6 +34,7 @@ io.on('connection', async (socket) => {
 });
 
 if (process.env.NODE_ENV !== 'test') {
+    console.log(process.env.PORT);
     server.listen(process.env.PORT, () => {
         console.log(`listening on port ${process.env.PORT}`);
     });
