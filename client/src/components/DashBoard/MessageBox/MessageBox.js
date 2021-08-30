@@ -45,12 +45,7 @@ const MessageBox = () => {
                 className="form-control"
                 onSubmit={(e) => {
                     e.preventDefault();
-                    console.log(
-                        editerValue.replace(
-                            /^(<p><br><\/p>)*|(<p><br><\/p>)*$/g,
-                            ''
-                        )
-                    );
+
                     sendMessage(
                         editerValue.replace(
                             /^(<p><br><\/p>)*|(<p><br><\/p>)*$/g,
