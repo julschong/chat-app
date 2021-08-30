@@ -32,7 +32,7 @@ io.on('connection', async (socket) => {
 });
 
 if (process.env.NODE_ENV !== 'test') {
-    server.listen(3003, () => {
-        console.log('listening on port 3003');
+    server.listen(process.env.PORT, () => {
+        console.log(`listening on port ${process.env.PORT}`);
     });
 }

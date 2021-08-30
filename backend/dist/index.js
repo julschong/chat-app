@@ -35,8 +35,8 @@ exports.io.on('connection', (socket) => __awaiter(void 0, void 0, void 0, functi
     socket.on('disconnect', socketActions_1.userDisconnect);
 }));
 if (process.env.NODE_ENV !== 'test') {
-    server.listen(3003, () => {
-        console.log('listening on port 3003');
+    server.listen(process.env.PORT, () => {
+        console.log(`listening on port ${process.env.PORT}`);
     });
 }
 //# sourceMappingURL=index.js.map
