@@ -34,6 +34,7 @@ exports.io.on('connection', (socket) => __awaiter(void 0, void 0, void 0, functi
     socket.on('get-active-rooms', socketActions_1.getActiveRoomList);
     socket.on('chat-message', socketActions_1.broadcast);
     socket.on('login', socketActions_1.userLogin);
+    socket.on('logout', socketActions_1.userLogout);
     socket.on('disconnect', socketActions_1.userDisconnect);
 }));
 if (process.env.NODE_ENV !== 'test') {

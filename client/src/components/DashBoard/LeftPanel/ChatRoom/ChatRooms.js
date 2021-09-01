@@ -1,38 +1,29 @@
 import './ChatRooms.css';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { SocketContext } from '../../../../context/socketContext';
+import {
+    SocketContext,
+    SOCKET_EVENTS
+} from '../../../../context/socketContext';
 
 const ChatRooms = () => {
-    const { socket, currentRoom, setCurrentRoom } = useContext(SocketContext);
+    const { socket, joinRoom, createRoom } = useContext(SocketContext);
     const [chatRooms, setChatRooms] = useState(['global']);
     const newRoomInputRef = useRef('');
 
     useEffect(() => {
-        socket.on('total-chat-rooms', (chatrooms) => setChatRooms(chatrooms));
-        socket.on('get-active-rooms', (data) => {
+        socket.on(SOCKET_EVENTS.CREATE_NEW_ROOM, (chatrooms) =>
+            setChatRooms(chatrooms)
+        );
+        socket.on(SOCKET_EVENTS.GET_ACTIVE_ROOMS, (data) => {
             setChatRooms((prev) => ['global', ...data]);
         });
-        socket.emit('get-active-rooms');
+        socket.emit(SOCKET_EVENTS.GET_ACTIVE_ROOMS);
+
+        return () => {
+            socket.off(SOCKET_EVENTS.TOTAL_CHAT_ROOMS);
+            socket.off(SOCKET_EVENTS.GET_ACTIVE_ROOMS);
+        };
     }, [socket]);
-
-    const test = () => {
-        const newRoomName = newRoomInputRef.current.value.trim();
-        if (newRoomName === '') {
-            return;
-        }
-
-        socket.emit('create-new-room', currentRoom, newRoomName);
-        setCurrentRoom(newRoomName);
-        newRoomInputRef.current.value = '';
-    };
-
-    const joinRoom = (roomName) => {
-        if (currentRoom === roomName) {
-            return;
-        }
-        socket.emit('create-new-room', currentRoom, roomName);
-        setCurrentRoom(roomName);
-    };
 
     return (
         <div className="chat-rooms-container">
@@ -54,7 +45,9 @@ const ChatRooms = () => {
                 placeholder="type a room name"
                 style={{ maxWidth: '100%' }}
             />
-            <button onClick={test}>create a room</button>
+            <button onClick={() => createRoom(newRoomInputRef)}>
+                create a room
+            </button>
         </div>
     );
 };

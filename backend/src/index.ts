@@ -15,7 +15,8 @@ import {
     getActiveRoomList,
     joinNewRoom,
     userDisconnect,
-    userLogin
+    userLogin,
+    userLogout
 } from './socketEvents/socketActions';
 
 export const io = new Server(server, {
@@ -30,6 +31,7 @@ io.on('connection', async (socket) => {
     socket.on('get-active-rooms', getActiveRoomList);
     socket.on('chat-message', broadcast);
     socket.on('login', userLogin);
+    socket.on('logout', userLogout);
     socket.on('disconnect', userDisconnect);
 });
 

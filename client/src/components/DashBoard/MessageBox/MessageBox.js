@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, useRef } from 'react';
 import './MessageBox.css';
 import DisplayChat from './DisplayChat/DisplayChat';
-import { SocketContext } from '../../../context/socketContext';
+import { SocketContext, SOCKET_EVENTS } from '../../../context/socketContext';
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -12,7 +12,7 @@ const MessageBox = ({ setMenu }) => {
     const [chatHistory, setChatHistory] = useState([]);
 
     useEffect(() => {
-        socket.on('broadcast-message', (id, name, msg) => {
+        socket.on(SOCKET_EVENTS.BROADCAST_MESSAGE, (id, name, msg) => {
             console.log(id, name, msg);
             setChatHistory((prev) => [
                 ...prev,
@@ -26,7 +26,7 @@ const MessageBox = ({ setMenu }) => {
         if (msg.trim() === '') {
             return;
         }
-        socket.emit('chat-message', { message: msg, user });
+        socket.emit(SOCKET_EVENTS.SEND_CHAT, { message: msg, user });
         setChatHistory((prev) => [...prev, { user, message: msg }]);
         setEditerValue('');
     };

@@ -1,5 +1,8 @@
 import './Live.css';
-import { SocketContext } from '../../../../context/socketContext';
+import {
+    SocketContext,
+    SOCKET_EVENTS
+} from '../../../../context/socketContext';
 import { useContext, useEffect, useState } from 'react';
 
 const Live = () => {
@@ -7,7 +10,11 @@ const Live = () => {
     const { socket } = useContext(SocketContext);
 
     useEffect(() => {
-        socket.on('users-in-room', (data) => setUsersInRoom(data));
+        socket.on(SOCKET_EVENTS.USERS_IN_ROOM, (data) => setUsersInRoom(data));
+
+        return () => {
+            socket.off(SOCKET_EVENTS.USERS_IN_ROOM);
+        };
     }, [socket]);
 
     return (

@@ -1,19 +1,28 @@
 import './LeftPanel.css';
 import { useContext, useEffect } from 'react';
-import { SocketContext } from '../../../context/socketContext';
+import {
+    APP_STORAGE_KEY,
+    SocketContext,
+    SOCKET_EVENTS
+} from '../../../context/socketContext';
 import Live from './Live/Live';
 import ChatRooms from './ChatRoom/ChatRooms';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
 const LeftPanel = ({ menu, setMenu }) => {
-    const { user } = useContext(SocketContext);
+    const { user, setUser, socket } = useContext(SocketContext);
+
+    const resize = (setMenu) => {
+        if (window.innerWidth > 600) {
+            setMenu(true);
+        }
+    };
 
     useEffect(() => {
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 600) {
-                setMenu(true);
-            }
-        });
+        window.addEventListener('resize', resize);
+        return () => {
+            window.removeEventListener('resize', resize);
+        };
     }, [setMenu]);
 
     return (
@@ -32,6 +41,15 @@ const LeftPanel = ({ menu, setMenu }) => {
                 <GiHamburgerMenu />
             </button>
             Welcome! {user && user.name}
+            <button
+                onClick={() => {
+                    window.localStorage.removeItem(APP_STORAGE_KEY);
+                    setUser();
+                    socket.emit(SOCKET_EVENTS.LOGOUT);
+                }}
+            >
+                sign out
+            </button>
             <ChatRooms />
             <Live />
         </div>

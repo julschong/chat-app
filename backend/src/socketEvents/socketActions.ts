@@ -111,3 +111,8 @@ export async function userLogin({ id, name }: LoginMessage) {
     io.to('global').emit('users-in-room', usersInGlobal);
     // console.log(usersInGlobal);
 }
+
+export async function userLogout() {
+    const id = users.findIndex((user: User) => user.serverId === this.id);
+    users.splice(id, 1);
+}
