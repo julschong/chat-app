@@ -1,5 +1,5 @@
 import './LeftPanel.css';
-import { useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import {
     APP_STORAGE_KEY,
     SocketContext,
@@ -12,18 +12,18 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 const LeftPanel = ({ menu, setMenu }) => {
     const { user, setUser, socket } = useContext(SocketContext);
 
-    const resize = (setMenu) => {
+    const resize = useCallback(() => {
         if (window.innerWidth > 600) {
             setMenu(true);
         }
-    };
+    }, [setMenu]);
 
     useEffect(() => {
         window.addEventListener('resize', resize);
         return () => {
             window.removeEventListener('resize', resize);
         };
-    }, [setMenu]);
+    }, [resize]);
 
     return (
         <div

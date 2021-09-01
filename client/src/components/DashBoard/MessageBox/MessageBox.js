@@ -20,13 +20,16 @@ const MessageBox = ({ setMenu }) => {
             ]);
         });
         quillRef.current.editor.focus();
+        return () => {
+            socket.off(SOCKET_EVENTS.BROADCAST_MESSAGE);
+        };
     }, [socket]);
 
     const sendMessage = (msg) => {
         if (msg.trim() === '') {
             return;
         }
-        socket.emit(SOCKET_EVENTS.SEND_CHAT, { message: msg, user });
+        socket.emit(SOCKET_EVENTS.SEND, { message: msg, user });
         setChatHistory((prev) => [...prev, { user, message: msg }]);
         setEditerValue('');
     };
