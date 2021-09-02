@@ -22,5 +22,15 @@
     align-self: flex-end;
 }
 
-.my-message {
+@media only screen and (max-width: 600px) {
+    .single-message-container {
+        padding: 6px;
+    }
+    .single-message {
+        width: 100%;
+    }
+
+    .single-message-author {
+        width: 100%;
+    }
 }

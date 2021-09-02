@@ -20,9 +20,19 @@
     max-width: 1500px;
     max-height: 1000px;
     position: relative;
-    border: 10px solid var(--light-teal-accent-color);
+    border: 10px solid var(--dark-color);
     border-radius: 15px;
     padding: 10px;
     display: flex;
     gap: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    .dash-board-container-1 {
+        max-width: 100%;
+        margin: 0;
+    }
+    .message-container {
+        max-width: 100%;
+    }
 }
