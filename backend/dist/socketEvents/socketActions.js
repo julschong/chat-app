@@ -39,10 +39,10 @@ function joinNewRoom(oldRoomName, roomName) {
         const user = Object.assign(Object.assign({}, user_1.users[userIndex]), { currentRoom: roomName });
         user_1.users.splice(userIndex, 1);
         user_1.users.push(user);
-        index_1.io.to(roomName).emit('broadcast-message', '1', 'server', `${user.name} has joined room: ${roomName}`);
+        index_1.io.to(roomName).emit('broadcast-message', '1', 'server', `${user.name} has joined room: ${roomName}`, new Date().toISOString());
         const newRoomUsers = user_1.users.filter((user) => user.currentRoom === roomName);
         index_1.io.to(roomName).emit('users-in-room', newRoomUsers);
-        index_1.io.to(oldRoomName).emit('broadcast-message', '1', 'server', `${user.name} has left room: ${oldRoomName}`);
+        index_1.io.to(oldRoomName).emit('broadcast-message', '1', 'server', `${user.name} has left room: ${oldRoomName}`, new Date().toISOString());
         const oldRoomUsers = user_1.users.filter((user) => user.currentRoom === oldRoomName);
         index_1.io.to(oldRoomName).emit('users-in-room', oldRoomUsers);
         index_1.io.emit('get-active-rooms', getActiveRooms(index_1.io.sockets.adapter.rooms));

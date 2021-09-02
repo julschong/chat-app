@@ -2,16 +2,20 @@ import './SingleMessage.css';
 
 const SingleMessage = ({ chat }) => {
     return (
-        <div
-            className={`single-message-container ${chat.self && 'my-message'}`}
-        >
+        <div className="single-message-container">
             <p
-                className="single-message"
+                className={`single-message ${
+                    chat.self && 'align-self-end my-message'
+                }`}
                 dangerouslySetInnerHTML={{
                     __html: chat.message
                 }}
             />
-            <p className="single-message-author">{`by ${chat.user.name} at ${chat.time}`}</p>
+            <p
+                className={`single-message-author ${
+                    chat.self && 'align-self-end'
+                }`}
+            >{`from ${chat.self ? 'you' : chat.user.name} at ${chat.time}`}</p>
         </div>
     );
 };

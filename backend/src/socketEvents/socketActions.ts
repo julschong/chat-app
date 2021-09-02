@@ -49,7 +49,8 @@ export async function joinNewRoom(oldRoomName: string, roomName: string) {
         'broadcast-message',
         '1',
         'server',
-        `${user.name} has joined room: ${roomName}`
+        `${user.name} has joined room: ${roomName}`,
+        new Date().toISOString()
     );
 
     const newRoomUsers = users.filter((user) => user.currentRoom === roomName);
@@ -59,7 +60,8 @@ export async function joinNewRoom(oldRoomName: string, roomName: string) {
         'broadcast-message',
         '1',
         'server',
-        `${user.name} has left room: ${oldRoomName}`
+        `${user.name} has left room: ${oldRoomName}`,
+        new Date().toISOString()
     );
     const oldRoomUsers = users.filter(
         (user) => user.currentRoom === oldRoomName

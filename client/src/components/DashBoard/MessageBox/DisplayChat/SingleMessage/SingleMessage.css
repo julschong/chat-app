@@ -18,6 +18,9 @@
     transform: translateY(-0.2em);
 }
 
+.align-self-end {
+    align-self: flex-end;
+}
+
 .my-message {
-    align-items: flex-end;
 }
