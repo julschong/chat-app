@@ -7,11 +7,6 @@
     font-size: 1.5em;
 }
 
-.message {
-    display: flex;
-    gap: 10px;
-}
-
 .menu-btn {
     display: none;
     background-color: transparent;

@@ -1,6 +1,7 @@
 import { useRef, useEffect, useContext } from 'react';
 import './DisplayChat.css';
 import { SocketContext } from '../../../../context/socketContext';
+import SingleMessage from './SingleMessage/SingleMessage';
 
 const DisplayChat = ({ chatHistory, setChatHistory }) => {
     const bottomRef = useRef();
@@ -19,15 +20,7 @@ const DisplayChat = ({ chatHistory, setChatHistory }) => {
             <p>{currentRoom}</p>
             <div className="display-chat-container">
                 {chatHistory.map((chat, i) => (
-                    <div className="message" key={i + chat}>
-                        <p>{`${chat.user.name}:    `}</p>
-                        <p
-                            style={{ display: 'inline' }}
-                            dangerouslySetInnerHTML={{
-                                __html: chat.message
-                            }}
-                        />
-                    </div>
+                    <SingleMessage chat={chat} key={chat + i} />
                 ))}
                 <div ref={bottomRef} />
             </div>

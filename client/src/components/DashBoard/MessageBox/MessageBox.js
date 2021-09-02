@@ -6,17 +6,21 @@ import { SocketContext, SOCKET_EVENTS } from '../../../context/socketContext';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { formatDateTime } from '../../../util/helper';
 
 const MessageBox = ({ setMenu }) => {
     const { socket, user } = useContext(SocketContext);
     const [chatHistory, setChatHistory] = useState([]);
 
     useEffect(() => {
-        socket.on(SOCKET_EVENTS.BROADCAST_MESSAGE, (id, name, msg) => {
-            console.log(id, name, msg);
+        socket.on(SOCKET_EVENTS.BROADCAST_MESSAGE, (id, name, msg, time) => {
             setChatHistory((prev) => [
                 ...prev,
-                { user: { id, name }, message: msg }
+                {
+                    user: { id, name },
+                    message: msg,
+                    time: formatDateTime(new Date(time))
+                }
             ]);
         });
         quillRef.current.editor.focus();
@@ -29,8 +33,11 @@ const MessageBox = ({ setMenu }) => {
         if (msg.trim() === '') {
             return;
         }
-        socket.emit(SOCKET_EVENTS.SEND, { message: msg, user });
-        setChatHistory((prev) => [...prev, { user, message: msg }]);
+        socket.emit(SOCKET_EVENTS.SEND_CHAT, { message: msg, user });
+        setChatHistory((prev) => [
+            ...prev,
+            { user, message: msg, time: formatDateTime(new Date()), self: true }
+        ]);
         setEditerValue('');
     };
 

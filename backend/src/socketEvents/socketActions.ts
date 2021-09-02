@@ -13,7 +13,6 @@ interface BroadcastMessage {
 export function broadcast(msg: BroadcastMessage) {
     const thisUser = users.find((user) => user.serverId === this.id);
     if (!thisUser) {
-        console.log(thisUser);
         return;
     }
 
@@ -21,7 +20,8 @@ export function broadcast(msg: BroadcastMessage) {
         'broadcast-message',
         msg.user.id,
         msg.user.name,
-        msg.message
+        msg.message,
+        new Date().toISOString()
     );
 }
 

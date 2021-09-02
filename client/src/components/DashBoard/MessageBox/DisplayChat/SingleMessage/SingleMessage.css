@@ -1,0 +1,23 @@
+.single-message-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.single-message {
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 45%;
+    padding: 16px 0 16px 16px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 3px rgba(255, 255, 255, 0.4);
+}
+
+.single-message-author {
+    color: var(--lightest-yellow-accent-color);
+    width: 45%;
+    padding-left: 16px;
+    transform: translateY(-0.2em);
+}
+
+.my-message {
+    align-items: flex-end;
+}

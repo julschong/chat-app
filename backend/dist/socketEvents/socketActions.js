@@ -15,10 +15,9 @@ const user_1 = require("./../_data/user");
 function broadcast(msg) {
     const thisUser = user_1.users.find((user) => user.serverId === this.id);
     if (!thisUser) {
-        console.log(thisUser);
         return;
     }
-    this.to(thisUser.currentRoom).emit('broadcast-message', msg.user.id, msg.user.name, msg.message);
+    this.to(thisUser.currentRoom).emit('broadcast-message', msg.user.id, msg.user.name, msg.message, new Date().toISOString());
 }
 exports.broadcast = broadcast;
 /**
